@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.jeong.demo.model.BoardMapper">
+	<select id="boardList" resultType="com.jeong.demo.model.BoardVo">
+		select * from board
+	</select>
+	
+	<select id="boardDetail" parameterType="int" resultType="com.jeong.demo.model.BoardVo">
+		select * from board 
+		where bno = #{bno}
+	</select>
+	
+	<insert id="boardSave" parameterType="com.jeong.demo.model.BoardVo" keyProperty="bno">	
+		insert into board(bno, name, subject, content, ins_date) 
+		values(#{bno}, #{name}, #{subject}, #{content}, now())
+	</insert>
+	
+	<update id="boardUpdate" parameterType="com.jeong.demo.model.BoardVo">
+		update board 
+		set subject = #{subject},
+			content = #{content}
+		where 
+			bno = #{bno}
+	</update>
+	
+	<delete id="boardDelete" parameterType="int">
+		delete from board
+		where bno = #{bno}
+	</delete>
+	
+	<!-- 기본 키 초기화
+		 ALTER TABLE [테이블명] AUTO_INCREMENT=1;
+		SET @COUNT = 0;
+		UPDATE [테이블명] SET [AUTO_INCREMENT 열 이름] = @COUNT:=@COUNT+1; -->
+</mapper>
